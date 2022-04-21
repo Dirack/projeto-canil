@@ -1,7 +1,8 @@
-import express from 'express';
+import express, {Request, Response} from 'express';
 import dotenv from 'dotenv';
 import mustache from 'mustache-express';
 import path from 'path';
+import mainRoutes from './routes';
 
 dotenv.config();
 
@@ -13,6 +14,10 @@ server.engine('mustache',mustache());
 
 server.use(express.static(path.join(__dirname,'../public')));
 
-// Routes
+server.use(mainRoutes);
+
+server.use((req: Request, res: Response)=>{
+	res.send("Page not found!");
+});
 
 server.listen(4000);
